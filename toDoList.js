@@ -19,6 +19,8 @@ app.use(bodyParser.json());
 var session = require('express-session');
 app.use(session({secret:'DoNotTell'}));
 
+var apiKey = "2a83a0b321985d7a305e91ce40ce86b0";
+
 // basic to do list code from lecture
 app.get('/',function(req,res,next){
   var context = {};
@@ -64,7 +66,21 @@ app.post('/',function(req,res){
   context.toDoCount = req.session.toDo.length;
   context.toDo = req.session.toDo;
   console.log(context.toDo);
-  res.render('toDo',context);
+
+  request("https://api.openweathermap.org/data/2.5/weather?q=" + req.body.city + ",us&appid=" + apiKey, highlight);
+
+  function highlight(err, response, body){
+    if(!err && response.statusCode <400){
+      context.owm = body;
+
+
+      
+      res.render('toDo',context);
+    }
+  }
+
+
+  
 });
 
 // setup code from lecture continues
