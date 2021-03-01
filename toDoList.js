@@ -21,6 +21,9 @@ app.use(session({secret:'DoNotTell'}));
 
 var request = require('request');
 
+var path = require('path');
+app.use(express.static(path.join(__dirname, '/public')));
+
 var apiKey = "2a83a0b321985d7a305e91ce40ce86b0";
 
 // basic to do list code from lecture
@@ -75,6 +78,13 @@ app.post('/',function(req,res){
       context.toDo = req.session.toDo;
       console.log(context.toDo);
       res.render('toDo',context);
+      }
+      else{
+        console.log(err);
+        if(response) {
+          console.log(response.statusCode);
+        }
+        next(err);
       }
     }
   }
