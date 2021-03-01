@@ -55,15 +55,20 @@ app.post('/',function(req,res){
   }
 
   if(req.body['Add Item']){
-    req.session.toDo.push({"name":req.body.name, "id":req.session.curId, "city":req.body.city, "temp":req.body.temp});
     req.session.curId++;
     request("https://api.openweathermap.org/data/2.5/weather?q=" + req.body.city + ",us&appid=" + apiKey, highlight);
     function highlight(err, response, body){
       if(!err && response.statusCode <400){
         context.owm = JSON.parse(body);
         console.log(context.owm);
+        if((context.owm.main.temp - 271.15) >= context.toDo.temp){
+          var isTempOk = true;
+        }
+        else{
+          var isTempOk = false;
+        }
 
-
+      req.session.toDo.push({"name":req.body.name, "id":req.session.curId, "city":req.body.city, "temp":req.body.temp, "tempOk":isTempOk});
       res.render('toDo',context);
       }
     }
