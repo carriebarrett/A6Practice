@@ -74,7 +74,7 @@ app.post('/',function(req,res){
   function highlight(err, response, body){
     if(!err && response.statusCode <400){
       context.owm = body;
-
+      console.log(body);
 
 
       res.render('toDo',context);
