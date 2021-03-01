@@ -79,6 +79,10 @@ app.post('/',function(req,res){
     req.session.toDo = req.session.toDo.filter(function(e){
       return e.id != req.body.id;
     })
+    context.name = req.session.name;
+    context.toDoCount = req.session.toDo.length;
+    context.toDo = req.session.toDo;
+    console.log(context.toDo);
     res.render('toDo', context);
   }
 
