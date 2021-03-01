@@ -1,5 +1,5 @@
 // front end of A6
-document.addEventListener("DOMContentLoaded", colorHeadings);
+document.getElementById("addSubmit").addEventListener("click", colorHeadings);
 
 function colorHeadings {
 	var itemList = document.getElementsByTagName("h3");
