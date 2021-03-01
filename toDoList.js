@@ -70,6 +70,10 @@ app.post('/',function(req,res){
         }
 
       req.session.toDo.push({"name":req.body.name, "id":req.session.curId, "city":req.body.city, "temp":req.body.temp, "tempOk":isTempOk});
+      context.name = req.session.name;
+      context.toDoCount = req.session.toDo.length;
+      context.toDo = req.session.toDo;
+      console.log(context.toDo);
       res.render('toDo',context);
       }
     }
