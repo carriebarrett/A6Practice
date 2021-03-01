@@ -19,6 +19,8 @@ app.use(bodyParser.json());
 var session = require('express-session');
 app.use(session({secret:'DoNotTell'}));
 
+var request = require('request');
+
 var apiKey = "2a83a0b321985d7a305e91ce40ce86b0";
 
 // basic to do list code from lecture
@@ -74,7 +76,7 @@ app.post('/',function(req,res){
       context.owm = body;
 
 
-      
+
       res.render('toDo',context);
     }
   }
