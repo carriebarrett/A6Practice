@@ -56,12 +56,23 @@ app.post('/',function(req,res){
   if(req.body['Add Item']){
     req.session.toDo.push({"name":req.body.name, "id":req.session.curId, "city":req.body.city, "temp":req.body.temp});
     req.session.curId++;
+    request("https://api.openweathermap.org/data/2.5/weather?q=" + req.body.city + ",us&appid=" + apiKey, highlight);
+    function highlight(err, response, body){
+      if(!err && response.statusCode <400){
+        context.owm = body;
+        console.log(body);
+
+
+      res.render('toDo',context);
+      }
+    }
   }
 
   if(req.body['Done']){
     req.session.toDo = req.session.toDo.filter(function(e){
       return e.id != req.body.id;
     })
+    res.render('toDo', context);
   }
 
   context.name = req.session.name;
@@ -69,20 +80,7 @@ app.post('/',function(req,res){
   context.toDo = req.session.toDo;
   console.log(context.toDo);
 
-  request("https://api.openweathermap.org/data/2.5/weather?q=" + req.body.city + ",us&appid=" + apiKey, highlight);
-
-  function highlight(err, response, body){
-    if(!err && response.statusCode <400){
-      context.owm = body;
-      console.log(body);
-
-
-      res.render('toDo',context);
-    }
-  }
-
-
-  
+ 
 });
 
 // setup code from lecture continues
