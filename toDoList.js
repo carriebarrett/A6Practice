@@ -61,7 +61,8 @@ app.post('/',function(req,res){
       if(!err && response.statusCode <400){
         context.owm = JSON.parse(body);
         console.log(context.owm);
-        if((context.owm.main.temp - 271.15) > context.toDo.temp){
+        console.log(context.owm.main.temp);
+        if((context.owm.main.temp - 271.15) > req.body.temp){
           var isTempOk = true;
         }
         else{
